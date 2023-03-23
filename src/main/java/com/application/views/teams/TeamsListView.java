@@ -63,14 +63,14 @@ public class TeamsListView extends VerticalLayout {
         grid.addColumn(new LocalDateRenderer<>(Team::getBirthday, "dd-MM-yyyy")).setHeader("Дата основания").setKey("birthday");
         grid.addColumn(team -> team.getSide().getSideName()).setHeader("Сторона").setKey("side");
         grid.getColumnByKey("created").setHeader("Создана (в системе)");
-        grid.addColumn(team -> team.getCreator().getName()).setHeader("Создатель (в системе)").setKey("creator");
+        grid.addColumn(team -> team.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
         grid.getColumnByKey("edited").setHeader("Отредактирована");
         grid.addColumn(team -> {
             Principal editor = team.getEditor();
             if (editor == null) {
                 return "";
             } else {
-                return editor.getName();
+                return editor.getUsername();
             }
         }).setHeader("Редактор").setKey("editor");
         grid.setColumnOrder(

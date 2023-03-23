@@ -58,14 +58,14 @@ public class TournamentsListView extends VerticalLayout {
         grid.setColumns("name", "created", "edited");
         grid.getColumnByKey("name").setHeader("Название");
         grid.getColumnByKey("created").setHeader("Создан (в системе)");
-        grid.addColumn(team -> team.getCreator().getName()).setHeader("Создатель (в системе)").setKey("creator");
+        grid.addColumn(team -> team.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
         grid.getColumnByKey("edited").setHeader("Отредактирован");
         grid.addColumn(team -> {
             Principal editor = team.getEditor();
             if (editor == null) {
                 return "";
             } else {
-                return editor.getName();
+                return editor.getUsername();
             }
         }).setHeader("Редактор").setKey("editor");
         grid.setColumnOrder(

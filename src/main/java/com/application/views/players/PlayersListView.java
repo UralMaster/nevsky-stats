@@ -90,14 +90,14 @@ public class PlayersListView extends VerticalLayout {
         grid.addColumn(player -> player.getActivityStatus().getTextualStatus()).setHeader("Статус").setKey("activityStatus");
 
         grid.getColumnByKey("created").setHeader("Создан (в системе)");
-        grid.addColumn(team -> team.getCreator().getName()).setHeader("Создатель (в системе)").setKey("creator");
+        grid.addColumn(team -> team.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
         grid.getColumnByKey("edited").setHeader("Отредактирован");
         grid.addColumn(player -> {
             Principal editor = player.getEditor();
             if (editor == null) {
                 return "";
             } else {
-                return editor.getName();
+                return editor.getUsername();
             }
         }).setHeader("Редактор").setKey("editor");
         grid.setColumnOrder(

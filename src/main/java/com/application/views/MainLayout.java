@@ -1,11 +1,13 @@
 package com.application.views;
 
+import com.application.security.SecurityService;
 import com.application.views.games.GamesListView;
 import com.application.views.players.PlayersListView;
 import com.application.views.seasons.SeasonsListView;
 import com.application.views.teams.TeamsListView;
 import com.application.views.tournaments.TournamentsListView;
 import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -17,13 +19,18 @@ import com.vaadin.flow.theme.lumo.Lumo;
 @Theme(Lumo.class)
 public class MainLayout extends AppLayout {
 
-    public MainLayout() {
+    private final SecurityService securityService;
+
+    public MainLayout(SecurityService securityService) {
+        this.securityService = securityService;
         createHeader();
     }
 
     private void createHeader() {
         H2 name = new H2(" Невский 26/54. Командная статистика");
         name.addClassNames("text-l", "m-m");
+
+        Button logout = new Button("Выход", e -> securityService.logout());
 
         RouterLink playersListLink = new RouterLink("Игроки", PlayersListView.class);
         playersListLink.setHighlightCondition(HighlightConditions.sameLocation());
@@ -50,12 +57,14 @@ public class MainLayout extends AppLayout {
                 gamesListLink,
                 tournamentsListLink,
                 seasonsListLink,
-                teamsListLink
+                teamsListLink,
+                logout
         );
 
         header.setDefaultVerticalComponentAlignment(FlexComponent.Alignment.BASELINE);
         header.setWidth("100%");
         header.setHeight("80px");
+        header.expand(name);
         header.addClassNames("py-0", "px-m");
 
         addToNavbar(header);

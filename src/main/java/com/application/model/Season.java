@@ -35,6 +35,7 @@ public class Season extends AbstractEntity {
         NFL ("Невская футбольная лига"),
         FFSPB_CUP_6x6 ("Кубок ФФСПб 6х6"),
         FRIENDLY_GAMES("Товарищеские игры"),
+        PLAY_INN ("Стыковые матчи"),
         OTHER ("Другое");
 
         private final String divisionName;
