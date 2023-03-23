@@ -67,14 +67,14 @@ public class SeasonsListView extends VerticalLayout {
         grid.addColumn(new LocalDateRenderer<>(Season::getStartDate, "dd-MM-yyyy")).setHeader("Дата начала").setKey("startDate");
         grid.addColumn(new LocalDateRenderer<>(Season::getEndDate, "dd-MM-yyyy")).setHeader("Дата окончания").setKey("endDate");
         grid.getColumnByKey("created").setHeader("Создан (в системе)");
-        grid.addColumn(season -> season.getCreator().getName()).setHeader("Создатель (в системе)").setKey("creator");
+        grid.addColumn(season -> season.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
         grid.getColumnByKey("edited").setHeader("Отредактирован");
         grid.addColumn(season -> {
             Principal editor = season.getEditor();
             if (editor == null) {
                 return "";
             } else {
-                return editor.getName();
+                return editor.getUsername();
             }
         }).setHeader("Редактор").setKey("editor");
         grid.setColumnOrder(
