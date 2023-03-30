@@ -61,7 +61,7 @@ public class PlayersListView extends VerticalLayout {
         grid.setColumns("name", "created", "edited", "games", "games26", "games54", "gamesFriendly", "goals", "goals26",
                 "goals54", "goalsFriendly", "assists", "assists26", "assists54", "assistsFriendly", "points", "points26",
                 "points54", "pointsFriendly", "yellowCards", "redCards");
-        grid.getColumnByKey("name").setHeader("Имя");
+        grid.getColumnByKey("name").setHeader("Имя").setFrozen(true);
         grid.addColumn(new LocalDateRenderer<>(Player::getBirthday, "dd-MM-yyyy")).setHeader("День рождения").setKey("birthday");
 
         grid.getColumnByKey("games26").setHeader("Игр Н26");

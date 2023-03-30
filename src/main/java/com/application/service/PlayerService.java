@@ -3,6 +3,7 @@ package com.application.service;
 import com.application.model.Player;
 import com.application.model.Principal;
 import com.application.repository.PlayerRepository;
+import com.application.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -15,13 +16,13 @@ public class PlayerService {
 
     private final PlayerRepository playerRepository;
 
-    private final PrincipalService principalService;
+    private final SecurityService securityService;
 
     public PlayerService(PlayerRepository playerRepository,
-                         PrincipalService principalService)
+                         SecurityService securityService)
     {
         this.playerRepository = playerRepository;
-        this.principalService = principalService;
+        this.securityService = securityService;
     }
 
     public List<Player> findAllPlayers(String stringFilter) {
@@ -82,13 +83,12 @@ public class PlayerService {
 
         player.setRedCards(player.getRedCardsOld() + player.getRedCardsNew());
 
-        //TODO: save current user for creator or editor
         if (player.getCreator() == null) {
-            Principal creator = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal creator = (Principal) securityService.getAuthenticatedUser();
             player.setCreator(creator);
             player.setCreated(LocalDateTime.now());
         } else {
-            Principal editor = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal editor = (Principal) securityService.getAuthenticatedUser();
             player.setEditor(editor);
             player.setEdited(LocalDateTime.now());
         }

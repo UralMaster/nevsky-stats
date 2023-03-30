@@ -19,12 +19,6 @@ import com.vaadin.flow.shared.Registration;
 import java.util.Arrays;
 
 public class GameDialog extends Dialog {
-/*    private final TeamService teamService;
-    private final TournamentService tournamentService;
-    private final SeasonService seasonService;
-    private final ParticipanceService participanceService;
-    private final PlayerService playerService;*/
-
     ComboBox<Team> nevskyTeam = new ComboBox<>("Невский");
     ComboBox<Team> oppositeTeam = new ComboBox<>("Соперник");
     IntegerField nevskyGoals = new IntegerField("Голы Невского");
@@ -48,11 +42,6 @@ public class GameDialog extends Dialog {
                       PlayerService playerService,
                       Game game)
     {
-/*        this.teamService = teamService;
-        this.tournamentService = tournamentService;
-        this.seasonService = seasonService;
-        this.participanceService = participanceService;
-        this.playerService = playerService;*/
         this.game = game;
 
         binder.bindInstanceFields(this);
@@ -118,7 +107,7 @@ public class GameDialog extends Dialog {
 
     // Events
     public static abstract class GameDialogEvent extends ComponentEvent<GameDialog> {
-        private Game game;
+        private final Game game;
 
         protected GameDialogEvent(GameDialog source, Game game) {
             super(source, false);

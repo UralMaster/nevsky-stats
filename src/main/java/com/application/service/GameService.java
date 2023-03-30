@@ -3,24 +3,24 @@ package com.application.service;
 import com.application.model.Game;
 import com.application.model.Principal;
 import com.application.repository.GameRepository;
+import com.application.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class GameService {
 
     private final GameRepository gameRepository;
 
-    private final PrincipalService principalService;
+    private final SecurityService securityService;
 
     public GameService(GameRepository gameRepository,
-                       PrincipalService principalService)
+                       SecurityService securityService)
     {
         this.gameRepository = gameRepository;
-        this.principalService = principalService;
+        this.securityService = securityService;
     }
 
     public List<Game> findAllGames() {
@@ -37,13 +37,12 @@ public class GameService {
             System.err.println("Game is null. Are you sure you have connected your form to the application?");
             return;
         }
-        //TODO: save current user for creator or editor
         if (game.getCreator() == null) {
-            Principal creator = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal creator = (Principal) securityService.getAuthenticatedUser();
             game.setCreator(creator);
             game.setCreated(LocalDateTime.now());
         } else {
-            Principal editor = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal editor = (Principal) securityService.getAuthenticatedUser();
             game.setEditor(editor);
             game.setEdited(LocalDateTime.now());
         }

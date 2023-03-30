@@ -2,28 +2,28 @@ package com.application.service;
 
 import com.application.model.*;
 import com.application.repository.ParticipanceRepository;
+import com.application.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class ParticipanceService {
 
     private final ParticipanceRepository participanceRepository;
 
-    private final PrincipalService principalService;
+    private final SecurityService securityService;
 
     private final PlayerService playerService;
 
     public ParticipanceService(ParticipanceRepository participanceRepository,
-                               PrincipalService principalService,
+                               SecurityService securityService,
                                PlayerService playerService)
     {
         this.participanceRepository = participanceRepository;
-        this.principalService = principalService;
+        this.securityService = securityService;
         this.playerService = playerService;
     }
 
@@ -139,13 +139,11 @@ public class ParticipanceService {
 
         }
 
-        //TODO: save current user for creator or editor
-        Principal editor = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+        Principal editor = (Principal) securityService.getAuthenticatedUser();
 
         player.setEditor(editor);
         player.setEdited(LocalDateTime.now());
 
-        //TODO: save current user for creator or editor
         if (participance.getCreator() == null) {
             participance.setCreator(editor);
             participance.setCreated(LocalDateTime.now());

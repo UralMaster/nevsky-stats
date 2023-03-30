@@ -33,6 +33,7 @@ public class Principal extends AbstractEntity implements UserDetails {
     }
 
     @Override
+    @NonNull
     public String getUsername() {
         return username;
     }
@@ -47,6 +48,7 @@ public class Principal extends AbstractEntity implements UserDetails {
     }
 
     @Override
+    @NonNull
     public String getPassword() {
         return password;
     }
@@ -56,7 +58,7 @@ public class Principal extends AbstractEntity implements UserDetails {
      *
      * @param password in encrypted form
      */
-    public void setPassword(String password) {
+    public void setPassword(@NonNull String password) {
         this.password = password;
     }
 

@@ -3,24 +3,24 @@ package com.application.service;
 import com.application.model.Principal;
 import com.application.model.Season;
 import com.application.repository.SeasonRepository;
+import com.application.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class SeasonService {
 
     private final SeasonRepository seasonRepository;
 
-    private final PrincipalService principalService;
+    private final SecurityService securityService;
 
     public SeasonService(SeasonRepository seasonRepository,
-                         PrincipalService principalService)
+                         SecurityService securityService)
     {
         this.seasonRepository = seasonRepository;
-        this.principalService = principalService;
+        this.securityService = securityService;
     }
 
     public List<Season> findAllSeasons(String stringFilter) {
@@ -51,13 +51,12 @@ public class SeasonService {
             season.setName(season.getDivision().getDivisionName());
         }
 
-        //TODO: save current user for creator or editor
         if (season.getCreator() == null) {
-            Principal creator = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal creator = (Principal) securityService.getAuthenticatedUser();
             season.setCreator(creator);
             season.setCreated(LocalDateTime.now());
         } else {
-            Principal editor = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal editor = (Principal) securityService.getAuthenticatedUser();
             season.setEditor(editor);
             season.setEdited(LocalDateTime.now());
         }
