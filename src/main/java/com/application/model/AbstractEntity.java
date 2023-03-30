@@ -1,10 +1,19 @@
 package com.application.model;
 
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import java.util.UUID;
 
+/**
+ * Abstract entity which provides unique identifier in format of {@link UUID}.
+ *
+ * @author Ilya Ryabukhin
+ * @since 15.04.2022
+ */
 @MappedSuperclass
 public abstract class AbstractEntity {
 
@@ -12,11 +21,22 @@ public abstract class AbstractEntity {
     @GeneratedValue
     private UUID id;
 
+    /**
+     * Returns identifiers of entity
+     *
+     * @return identifiers of entity
+     */
+    @Nullable
     public UUID getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    /**
+     * Sets id for this entity
+     *
+     * @param id for setting
+     */
+    public void setId(@NonNull UUID id) {
         this.id = id;
     }
 
@@ -29,9 +49,9 @@ public abstract class AbstractEntity {
     }
 
     @Override
-    public boolean equals(Object obj) {
+    public boolean equals(@NonNull Object obj) {
         if (!(obj instanceof AbstractEntity)) {
-            return false; // null or other class
+            return false;
         }
         AbstractEntity other = (AbstractEntity) obj;
 

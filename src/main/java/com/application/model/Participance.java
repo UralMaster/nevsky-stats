@@ -1,5 +1,8 @@
 package com.application.model;
 
+import org.springframework.lang.NonNull;
+import org.springframework.lang.Nullable;
+
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
@@ -48,22 +51,27 @@ public class Participance extends AbstractEntity {
     @JoinColumn(name = "remover")
     private Principal remover;
 
+    /**
+     * Constructor
+     */
     public Participance() {
     }
 
+    @NonNull
     public Player getPlayer() {
         return player;
     }
 
-    public void setPlayer(Player player) {
+    public void setPlayer(@NonNull Player player) {
         this.player = player;
     }
 
+    @NonNull
     public Game getGame() {
         return game;
     }
 
-    public void setGame(Game game) {
+    public void setGame(@NonNull Game game) {
         this.game = game;
     }
 
@@ -99,51 +107,57 @@ public class Participance extends AbstractEntity {
         this.redCards = redCards;
     }
 
+    @Nullable
     public LocalDateTime getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(@NonNull LocalDateTime created) {
         this.created = created;
     }
 
+    @Nullable
     public Principal getCreator() {
         return creator;
     }
 
-    public void setCreator(Principal creator) {
+    public void setCreator(@NonNull Principal creator) {
         this.creator = creator;
     }
 
+    @Nullable
     public LocalDateTime getEdited() {
         return edited;
     }
 
-    public void setEdited(LocalDateTime edited) {
+    public void setEdited(@NonNull LocalDateTime edited) {
         this.edited = edited;
     }
 
+    @Nullable
     public Principal getEditor() {
         return editor;
     }
 
-    public void setEditor(Principal editor) {
+    public void setEditor(@NonNull Principal editor) {
         this.editor = editor;
     }
 
+    @Nullable
     public LocalDateTime getRemoved() {
         return removed;
     }
 
-    public void setRemoved(LocalDateTime removed) {
+    public void setRemoved(@NonNull LocalDateTime removed) {
         this.removed = removed;
     }
 
+    @Nullable
     public Principal getRemover() {
         return remover;
     }
 
-    public void setRemover(Principal remover) {
+    public void setRemover(@NonNull Principal remover) {
         this.remover = remover;
     }
 

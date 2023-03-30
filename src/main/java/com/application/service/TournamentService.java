@@ -3,24 +3,24 @@ package com.application.service;
 import com.application.model.Principal;
 import com.application.model.Tournament;
 import com.application.repository.TournamentRepository;
+import com.application.security.SecurityService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class TournamentService {
 
     private final TournamentRepository tournamentRepository;
 
-    private final PrincipalService principalService;
+    private final SecurityService securityService;
 
     public TournamentService(TournamentRepository tournamentRepository,
-                             PrincipalService principalService)
+                             SecurityService securityService)
     {
         this.tournamentRepository = tournamentRepository;
-        this.principalService = principalService;
+        this.securityService = securityService;
     }
 
     public List<Tournament> findAllTournaments(String stringFilter) {
@@ -46,13 +46,12 @@ public class TournamentService {
             System.err.println("Tournament is null. Are you sure you have connected your form to the application?");
             return;
         }
-        //TODO: save current user for creator or editor
         if (tournament.getCreator() == null) {
-            Principal creator = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal creator = (Principal) securityService.getAuthenticatedUser();
             tournament.setCreator(creator);
             tournament.setCreated(LocalDateTime.now());
         } else {
-            Principal editor = principalService.findPrincipalById(UUID.fromString("89b2bf2e-d6e8-11ec-9d64-0242ac120002"));
+            Principal editor = (Principal) securityService.getAuthenticatedUser();
             tournament.setEditor(editor);
             tournament.setEdited(LocalDateTime.now());
         }

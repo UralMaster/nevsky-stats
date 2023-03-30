@@ -114,9 +114,6 @@ public class GamesListView extends VerticalLayout {
 
     private void addGame() {
         grid.asSingleSelect().clear();
-/*        Game game = new Game();
-        game.setId(UUID.randomUUID());
-        editGame(game);*/
         editGame(new Game());
     }
 
