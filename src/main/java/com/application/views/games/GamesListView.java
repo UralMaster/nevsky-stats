@@ -7,11 +7,15 @@ import com.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.util.List;
 
 @Route(value = "games", layout = MainLayout.class)
 @PageTitle("Игры | Н26/54 статистика")
@@ -58,7 +62,9 @@ public class GamesListView extends VerticalLayout {
         grid.addClassNames("games-grid");
         grid.setSizeFull();
         grid.setColumns("created", "edited", "nevskyGoals", "oppositeGoals");
-        grid.addColumn(new LocalDateRenderer<>(Game::getGamedate, "dd-MM-yyyy")).setHeader("Дата").setKey("gamedate");
+        grid.addColumn(new LocalDateRenderer<>(Game::getGamedate, "dd-MM-yyyy")).setHeader("Дата").setKey("gamedate")
+                .setSortable(true)
+                .setComparator(Game::getGamedate);
         grid.addColumn(game -> game.getNevskyTeam().getName()).setHeader("Команда Невского").setKey("nevskyTeam");
         grid.getColumnByKey("nevskyGoals").setHeader("Забито");
         grid.getColumnByKey("oppositeGoals").setHeader("Пропущено");
@@ -94,6 +100,8 @@ public class GamesListView extends VerticalLayout {
         );
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.sort(List.of(new GridSortOrder<>(grid.getColumnByKey("gamedate"), SortDirection.DESCENDING)));
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editGame(event.getValue()));

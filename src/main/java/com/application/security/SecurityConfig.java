@@ -22,17 +22,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_FAILURE_URL = "/login?error";
     private static final String LOGIN_URL = "/login";
     private static final String LOGOUT_SUCCESS_URL = "/login";
+    private static final String DEFAULT_SUCCESS_URL = "/players";
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         // Vaadin handles CSRF internally
         http.csrf().disable()
-
-                // Register our CustomRequestCache, which saves unauthorized access attempts, so the user is redirected after login.
-                .requestCache().requestCache(new CustomRequestCache())
-
-                // Restrict access to our application.
-                .and()
                 .authorizeRequests()
 
                 // Allow all Vaadin internal requests.
@@ -46,6 +41,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .loginPage(LOGIN_URL).permitAll()
                 .loginProcessingUrl(LOGIN_PROCESSING_URL)
                 .failureUrl(LOGIN_FAILURE_URL)
+                .defaultSuccessUrl(DEFAULT_SUCCESS_URL, true)
 
                 // Configure logout
                 .and().logout().logoutSuccessUrl(LOGOUT_SUCCESS_URL);
