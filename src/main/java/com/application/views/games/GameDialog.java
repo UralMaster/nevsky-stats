@@ -17,6 +17,7 @@ import com.vaadin.flow.data.binder.ValidationException;
 import com.vaadin.flow.shared.Registration;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class GameDialog extends Dialog {
     ComboBox<Team> nevskyTeam = new ComboBox<>("Невский");
@@ -46,9 +47,13 @@ public class GameDialog extends Dialog {
 
         binder.bindInstanceFields(this);
 
-        nevskyTeam.setItems(teamService.findAllTeams(null));
+        nevskyTeam.setItems(teamService.findAllTeams(null).stream()
+                .filter(team -> team.getSide() == Team.GameSide.NEVSKY)
+                .collect(Collectors.toList()));
         nevskyTeam.setItemLabelGenerator(Team::getName);
-        oppositeTeam.setItems(teamService.findAllTeams(null));
+        oppositeTeam.setItems(teamService.findAllTeams(null).stream()
+                .filter(team -> team.getSide() == Team.GameSide.OTHER)
+                .collect(Collectors.toList()));
         oppositeTeam.setItemLabelGenerator(Team::getName);
 
         nevskyGoals.setMin(0);

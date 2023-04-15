@@ -7,15 +7,18 @@ import com.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Route(value = "players", layout = MainLayout.class)
 @PageTitle("Игроки | Н26/54 статистика")
@@ -129,6 +132,8 @@ public class PlayersListView extends VerticalLayout {
         );
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.sort(List.of(new GridSortOrder<>(grid.getColumnByKey("games"), SortDirection.DESCENDING)));
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editPlayer(event.getValue()));
