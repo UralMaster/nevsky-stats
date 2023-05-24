@@ -62,20 +62,37 @@ public class GamesListView extends VerticalLayout {
         grid.addClassNames("games-grid");
         grid.setSizeFull();
         grid.setColumns("created", "edited", "nevskyGoals", "oppositeGoals");
-        grid.addColumn(new LocalDateRenderer<>(Game::getGamedate, "dd-MM-yyyy")).setHeader("Дата").setKey("gamedate")
+        grid.addColumn(new LocalDateRenderer<>(Game::getGamedate, "dd-MM-yyyy"))
+                .setHeader("Дата")
+                .setKey("gamedate")
                 .setSortable(true)
                 .setComparator(Game::getGamedate);
-        grid.addColumn(game -> game.getNevskyTeam().getName()).setHeader("Команда Невского").setKey("nevskyTeam");
-        grid.getColumnByKey("nevskyGoals").setHeader("Забито");
-        grid.getColumnByKey("oppositeGoals").setHeader("Пропущено");
-        grid.addColumn(game -> game.getOppositeTeam().getName()).setHeader("Соперник").setKey("oppositeTeam");
-        grid.addColumn(game -> game.getTournament().getName()).setHeader("Турнир").setKey("tournament");
-        grid.addColumn(game -> game.getSeason().getName()).setHeader("Сезон").setKey("season");
-        grid.addColumn(game -> game.getHistoricalStatus().getTextualStatus()).setHeader("Статус").setKey("historicalStatus");
+        grid.addColumn(game -> game.getNevskyTeam().getName())
+                .setHeader("Команда Невского")
+                .setKey("nevskyTeam");
+        grid.getColumnByKey("nevskyGoals")
+                .setHeader("Забито");
+        grid.getColumnByKey("oppositeGoals")
+                .setHeader("Пропущено");
+        grid.addColumn(game -> game.getOppositeTeam().getName())
+                .setHeader("Соперник").setKey("oppositeTeam");
+        grid.addColumn(game -> game.getTournament().getName())
+                .setHeader("Турнир")
+                .setKey("tournament");
+        grid.addColumn(game -> game.getSeason().getName())
+                .setHeader("Сезон")
+                .setKey("season");
+        grid.addColumn(game -> game.getHistoricalStatus().getTextualStatus())
+                .setHeader("Статус")
+                .setKey("historicalStatus");
 
-        grid.getColumnByKey("created").setHeader("Создана (в системе)");
-        grid.addColumn(team -> team.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
-        grid.getColumnByKey("edited").setHeader("Отредактирована");
+        grid.getColumnByKey("created")
+                .setHeader("Создана (в системе)");
+        grid.addColumn(team -> team.getCreator().getUsername())
+                .setHeader("Создатель (в системе)")
+                .setKey("creator");
+        grid.getColumnByKey("edited")
+                .setHeader("Отредактирована");
         grid.addColumn(team -> {
             Principal editor = team.getEditor();
             if (editor == null) {
@@ -83,7 +100,8 @@ public class GamesListView extends VerticalLayout {
             } else {
                 return editor.getUsername();
             }
-        }).setHeader("Редактор").setKey("editor");
+        }).setHeader("Редактор")
+                .setKey("editor");
         grid.setColumnOrder(
                 grid.getColumnByKey("gamedate"),
                 grid.getColumnByKey("nevskyTeam"),

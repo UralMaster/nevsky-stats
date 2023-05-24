@@ -8,15 +8,18 @@ import com.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.renderer.LocalDateRenderer;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Route(value = "seasons", layout = MainLayout.class)
 @PageTitle("Сезоны | Н26/54 статистика")
@@ -62,13 +65,29 @@ public class SeasonsListView extends VerticalLayout {
         grid.addClassNames("seasons-grid");
         grid.setSizeFull();
         grid.setColumns("name", "created", "edited");
-        grid.addColumn(season -> season.getTournament().getName()).setHeader("Турнир").setKey("tournament");
-        grid.addColumn(season -> season.getDivision().getDivisionName()).setHeader("Дивизион").setKey("division");
-        grid.addColumn(new LocalDateRenderer<>(Season::getStartDate, "dd-MM-yyyy")).setHeader("Дата начала").setKey("startDate");
-        grid.addColumn(new LocalDateRenderer<>(Season::getEndDate, "dd-MM-yyyy")).setHeader("Дата окончания").setKey("endDate");
-        grid.getColumnByKey("created").setHeader("Создан (в системе)");
-        grid.addColumn(season -> season.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
-        grid.getColumnByKey("edited").setHeader("Отредактирован");
+        grid.addColumn(season -> season.getTournament().getName())
+                .setHeader("Турнир")
+                .setKey("tournament");
+        grid.addColumn(season -> season.getDivision().getDivisionName())
+                .setHeader("Дивизион")
+                .setKey("division");
+        grid.addColumn(new LocalDateRenderer<>(Season::getStartDate, "dd-MM-yyyy"))
+                .setHeader("Дата начала")
+                .setKey("startDate")
+                .setSortable(true)
+                .setComparator(Season::getStartDate);
+        grid.addColumn(new LocalDateRenderer<>(Season::getEndDate, "dd-MM-yyyy"))
+                .setHeader("Дата окончания")
+                .setKey("endDate")
+                .setSortable(true)
+                .setComparator(Season::getEndDate);
+        grid.getColumnByKey("created")
+                .setHeader("Создан (в системе)");
+        grid.addColumn(season -> season.getCreator().getUsername())
+                .setHeader("Создатель (в системе)")
+                .setKey("creator");
+        grid.getColumnByKey("edited")
+                .setHeader("Отредактирован");
         grid.addColumn(season -> {
             Principal editor = season.getEditor();
             if (editor == null) {
@@ -76,7 +95,8 @@ public class SeasonsListView extends VerticalLayout {
             } else {
                 return editor.getUsername();
             }
-        }).setHeader("Редактор").setKey("editor");
+        }).setHeader("Редактор")
+                .setKey("editor");
         grid.setColumnOrder(
                 grid.getColumnByKey("tournament"),
                 grid.getColumnByKey("division"),
@@ -90,6 +110,8 @@ public class SeasonsListView extends VerticalLayout {
         );
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.sort(List.of(new GridSortOrder<>(grid.getColumnByKey("startDate"), SortDirection.DESCENDING)));
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editSeason(event.getValue()));
