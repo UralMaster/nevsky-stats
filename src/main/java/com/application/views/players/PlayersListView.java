@@ -64,37 +64,65 @@ public class PlayersListView extends VerticalLayout {
         grid.setColumns("name", "created", "edited", "games", "games26", "games54", "gamesFriendly", "goals", "goals26",
                 "goals54", "goalsFriendly", "assists", "assists26", "assists54", "assistsFriendly", "points", "points26",
                 "points54", "pointsFriendly", "yellowCards", "redCards");
-        grid.getColumnByKey("name").setHeader("Имя").setFrozen(true);
-        grid.addColumn(new LocalDateRenderer<>(Player::getBirthday, "dd-MM-yyyy")).setHeader("День рождения").setKey("birthday");
+        grid.getColumnByKey("name")
+                .setHeader("Имя")
+                .setFrozen(true);
+        grid.addColumn(new LocalDateRenderer<>(Player::getBirthday, "dd-MM-yyyy"))
+                .setHeader("День рождения")
+                .setKey("birthday");
 
-        grid.getColumnByKey("games26").setHeader("Игр Н26");
-        grid.getColumnByKey("games54").setHeader("Игр Н54");
-        grid.getColumnByKey("gamesFriendly").setHeader("Игр (товар.)");
-        grid.getColumnByKey("games").setHeader("Игр (всего)");
+        grid.getColumnByKey("games26")
+                .setHeader("Игр Н26");
+        grid.getColumnByKey("games54")
+                .setHeader("Игр Н54");
+        grid.getColumnByKey("gamesFriendly")
+                .setHeader("Игр (товар.)");
+        grid.getColumnByKey("games")
+                .setHeader("Игр (всего)");
 
-        grid.getColumnByKey("goals26").setHeader("Голов Н26");
-        grid.getColumnByKey("goals54").setHeader("Голов Н54");
-        grid.getColumnByKey("goalsFriendly").setHeader("Голов (товар.)");
-        grid.getColumnByKey("goals").setHeader("Голов (всего)");
+        grid.getColumnByKey("goals26")
+                .setHeader("Голов Н26");
+        grid.getColumnByKey("goals54")
+                .setHeader("Голов Н54");
+        grid.getColumnByKey("goalsFriendly")
+                .setHeader("Голов (товар.)");
+        grid.getColumnByKey("goals")
+                .setHeader("Голов (всего)");
 
-        grid.getColumnByKey("assists26").setHeader("Передач Н26");
-        grid.getColumnByKey("assists54").setHeader("Передач Н54");
-        grid.getColumnByKey("assistsFriendly").setHeader("Передач (товар.)");
-        grid.getColumnByKey("assists").setHeader("Передач (всего)");
+        grid.getColumnByKey("assists26")
+                .setHeader("Передач Н26");
+        grid.getColumnByKey("assists54")
+                .setHeader("Передач Н54");
+        grid.getColumnByKey("assistsFriendly")
+                .setHeader("Передач (товар.)");
+        grid.getColumnByKey("assists")
+                .setHeader("Передач (всего)");
 
-        grid.getColumnByKey("points26").setHeader("Очков Н26");
-        grid.getColumnByKey("points54").setHeader("Очков Н54");
-        grid.getColumnByKey("pointsFriendly").setHeader("Очков (товар.)");
-        grid.getColumnByKey("points").setHeader("Очков (всего)");
+        grid.getColumnByKey("points26")
+                .setHeader("Очков Н26");
+        grid.getColumnByKey("points54")
+                .setHeader("Очков Н54");
+        grid.getColumnByKey("pointsFriendly")
+                .setHeader("Очков (товар.)");
+        grid.getColumnByKey("points")
+                .setHeader("Очков (всего)");
 
-        grid.getColumnByKey("yellowCards").setHeader("ЖК");
-        grid.getColumnByKey("redCards").setHeader("КК");
+        grid.getColumnByKey("yellowCards")
+                .setHeader("ЖК");
+        grid.getColumnByKey("redCards")
+                .setHeader("КК");
 
-        grid.addColumn(player -> player.getActivityStatus().getTextualStatus()).setHeader("Статус").setKey("activityStatus");
+        grid.addColumn(player -> player.getActivityStatus().getTextualStatus())
+                .setHeader("Статус")
+                .setKey("activityStatus");
 
-        grid.getColumnByKey("created").setHeader("Создан (в системе)");
-        grid.addColumn(team -> team.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
-        grid.getColumnByKey("edited").setHeader("Отредактирован");
+        grid.getColumnByKey("created")
+                .setHeader("Создан (в системе)");
+        grid.addColumn(team -> team.getCreator().getUsername())
+                .setHeader("Создатель (в системе)")
+                .setKey("creator");
+        grid.getColumnByKey("edited")
+                .setHeader("Отредактирован");
         grid.addColumn(player -> {
             Principal editor = player.getEditor();
             if (editor == null) {
@@ -102,7 +130,8 @@ public class PlayersListView extends VerticalLayout {
             } else {
                 return editor.getUsername();
             }
-        }).setHeader("Редактор").setKey("editor");
+        }).setHeader("Редактор")
+                .setKey("editor");
         grid.setColumnOrder(
                 grid.getColumnByKey("name"),
                 grid.getColumnByKey("birthday"),

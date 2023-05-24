@@ -7,12 +7,16 @@ import com.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.grid.GridSortOrder;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.provider.SortDirection;
 import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+
+import java.util.List;
 
 @Route(value = "tournaments", layout = MainLayout.class)
 @PageTitle("Турниры | Н26/54 статистика")
@@ -56,10 +60,15 @@ public class TournamentsListView extends VerticalLayout {
         grid.addClassNames("tournaments-grid");
         grid.setSizeFull();
         grid.setColumns("name", "created", "edited");
-        grid.getColumnByKey("name").setHeader("Название");
-        grid.getColumnByKey("created").setHeader("Создан (в системе)");
-        grid.addColumn(team -> team.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
-        grid.getColumnByKey("edited").setHeader("Отредактирован");
+        grid.getColumnByKey("name")
+                .setHeader("Название");
+        grid.getColumnByKey("created")
+                .setHeader("Создан (в системе)");
+        grid.addColumn(team -> team.getCreator().getUsername())
+                .setHeader("Создатель (в системе)")
+                .setKey("creator");
+        grid.getColumnByKey("edited")
+                .setHeader("Отредактирован");
         grid.addColumn(team -> {
             Principal editor = team.getEditor();
             if (editor == null) {
@@ -67,7 +76,8 @@ public class TournamentsListView extends VerticalLayout {
             } else {
                 return editor.getUsername();
             }
-        }).setHeader("Редактор").setKey("editor");
+        }).setHeader("Редактор")
+                .setKey("editor");
         grid.setColumnOrder(
                 grid.getColumnByKey("name"),
                 grid.getColumnByKey("created"),
@@ -77,6 +87,8 @@ public class TournamentsListView extends VerticalLayout {
         );
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+
+        grid.sort(List.of(new GridSortOrder<>(grid.getColumnByKey("name"), SortDirection.ASCENDING)));
 
         grid.asSingleSelect().addValueChangeListener(event ->
                 editTournament(event.getValue()));

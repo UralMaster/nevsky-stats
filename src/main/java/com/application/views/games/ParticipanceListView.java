@@ -58,15 +58,24 @@ public class ParticipanceListView extends VerticalLayout {
         grid.addClassNames("participance-grid");
         grid.setSizeFull();
         grid.setColumns("created", "edited", "goals", "assists", "yellowCards", "redCards");
-        grid.addColumn(participance -> participance.getPlayer().getName()).setHeader("Игрок").setKey("player");
-        grid.getColumnByKey("goals").setHeader("Голов");
-        grid.getColumnByKey("assists").setHeader("Передач");
-        grid.getColumnByKey("yellowCards").setHeader("ЖК");
-        grid.getColumnByKey("redCards").setHeader("КК");
+        grid.addColumn(participance -> participance.getPlayer().getName()).setHeader("Игрок")
+                .setKey("player");
+        grid.getColumnByKey("goals")
+                .setHeader("Голов");
+        grid.getColumnByKey("assists")
+                .setHeader("Передач");
+        grid.getColumnByKey("yellowCards")
+                .setHeader("ЖК");
+        grid.getColumnByKey("redCards")
+                .setHeader("КК");
 
-        grid.getColumnByKey("created").setHeader("Создан (в системе)");
-        grid.addColumn(season -> season.getCreator().getUsername()).setHeader("Создатель (в системе)").setKey("creator");
-        grid.getColumnByKey("edited").setHeader("Отредактирован");
+        grid.getColumnByKey("created")
+                .setHeader("Создан (в системе)");
+        grid.addColumn(season -> season.getCreator().getUsername())
+                .setHeader("Создатель (в системе)")
+                .setKey("creator");
+        grid.getColumnByKey("edited")
+                .setHeader("Отредактирован");
         grid.addColumn(season -> {
             Principal editor = season.getEditor();
             if (editor == null) {
@@ -74,7 +83,8 @@ public class ParticipanceListView extends VerticalLayout {
             } else {
                 return editor.getUsername();
             }
-        }).setHeader("Редактор").setKey("editor");
+        }).setHeader("Редактор")
+                .setKey("editor");
         grid.setColumnOrder(
                 grid.getColumnByKey("player"),
                 grid.getColumnByKey("goals"),
