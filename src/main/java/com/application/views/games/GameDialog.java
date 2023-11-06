@@ -51,9 +51,7 @@ public class GameDialog extends Dialog {
                 .filter(team -> team.getSide() == Team.GameSide.NEVSKY)
                 .collect(Collectors.toList()));
         nevskyTeam.setItemLabelGenerator(Team::getName);
-        oppositeTeam.setItems(teamService.findAllTeams(null).stream()
-                .filter(team -> team.getSide() == Team.GameSide.OTHER)
-                .collect(Collectors.toList()));
+        oppositeTeam.setItems(teamService.findAllTeams(null));
         oppositeTeam.setItemLabelGenerator(Team::getName);
 
         nevskyGoals.setMin(0);
