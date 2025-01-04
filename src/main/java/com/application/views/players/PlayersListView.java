@@ -76,7 +76,7 @@ public class PlayersListView extends VerticalLayout {
         grid.getColumnByKey("games54")
                 .setHeader("Игр Н54");
         grid.getColumnByKey("gamesFriendly")
-                .setHeader("Игр (товар.)");
+                .setHeader("Игр (прочих)");
         grid.getColumnByKey("games")
                 .setHeader("Игр (всего)");
 
@@ -85,7 +85,7 @@ public class PlayersListView extends VerticalLayout {
         grid.getColumnByKey("goals54")
                 .setHeader("Голов Н54");
         grid.getColumnByKey("goalsFriendly")
-                .setHeader("Голов (товар.)");
+                .setHeader("Голов (прочих)");
         grid.getColumnByKey("goals")
                 .setHeader("Голов (всего)");
 
@@ -94,7 +94,7 @@ public class PlayersListView extends VerticalLayout {
         grid.getColumnByKey("assists54")
                 .setHeader("Передач Н54");
         grid.getColumnByKey("assistsFriendly")
-                .setHeader("Передач (товар.)");
+                .setHeader("Передач (прочих)");
         grid.getColumnByKey("assists")
                 .setHeader("Передач (всего)");
 
@@ -103,7 +103,7 @@ public class PlayersListView extends VerticalLayout {
         grid.getColumnByKey("points54")
                 .setHeader("Очков Н54");
         grid.getColumnByKey("pointsFriendly")
-                .setHeader("Очков (товар.)");
+                .setHeader("Очков (прочих)");
         grid.getColumnByKey("points")
                 .setHeader("Очков (всего)");
 

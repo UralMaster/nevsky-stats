@@ -11,6 +11,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Service which contains {@link Player}s related logic - search, count, etc.
+ *
+ * @author Ilya Ryabukhin
+ * @since 18.04.2023
+ */
 @Service
 public class PlayerService {
 
@@ -53,35 +59,13 @@ public class PlayerService {
             return;
         }
 
-        player.setGames26(player.getGames26Old() + player.getGames26New());
-        player.setGames54(player.getGames54Old() + player.getGames54New());
-        player.setGamesFriendly(player.getGamesFriendlyOld() + player.getGamesFriendlyNew());
         player.setGames(player.getGames26() + player.getGames54() + player.getGamesFriendly());
-
-        player.setGoals26(player.getGoals26Old() + player.getGoals26New());
-        player.setGoals54(player.getGoals54Old() +  player.getGoals54New());
-        player.setGoalsFriendly(player.getGoalsFriendlyOld() + player.getGoalsFriendlyNew());
         player.setGoals(player.getGoals26() + player.getGoals54() + player.getGoalsFriendly());
-
-        player.setAssists26(player.getAssists26Old() + player.getAssists26New());
-        player.setAssists54(player.getAssists54Old() + player.getAssists54New());
-        player.setAssistsFriendly(player.getAssistsFriendlyOld() + player.getAssistsFriendlyNew());
         player.setAssists(player.getAssists26() + player.getAssists54() + player.getAssistsFriendly());
-
-        player.setPoints26Old(player.getGoals26Old() + player.getAssists26Old());
-        player.setPoints54Old(player.getGoals54Old() + player.getAssists54Old());
-        player.setPointsFriendlyOld(player.getGoalsFriendlyOld() + player.getAssistsFriendlyOld());
-        player.setPoints26New(player.getGoals26New() + player.getAssists26New());
-        player.setPoints54New(player.getGoals54New() + player.getAssists54New());
-        player.setPointsFriendlyNew(player.getGoalsFriendlyNew() + player.getAssistsFriendlyNew());
-        player.setPoints26(player.getPoints26Old() + player.getPoints26New());
-        player.setPoints54(player.getPoints54Old() + player.getPoints54New());
-        player.setPointsFriendly(player.getPointsFriendlyOld() + player.getPointsFriendlyNew());
+        player.setPoints26(player.getGoals26() + player.getAssists26());
+        player.setPoints54(player.getGoals54() + player.getAssists54());
+        player.setPointsFriendly(player.getGoalsFriendly() + player.getAssistsFriendly());
         player.setPoints(player.getPoints26() + player.getPoints54() + player.getPointsFriendly());
-
-        player.setYellowCards(player.getYellowCardsOld() + player.getYellowCardsNew());
-
-        player.setRedCards(player.getRedCardsOld() + player.getRedCardsNew());
 
         if (player.getCreator() == null) {
             Principal creator = (Principal) securityService.getAuthenticatedUser();
