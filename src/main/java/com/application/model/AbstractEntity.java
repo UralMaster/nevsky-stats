@@ -12,7 +12,7 @@ import java.util.UUID;
  * Abstract entity which provides unique identifier in format of {@link UUID}.
  *
  * @author Ilya Ryabukhin
- * @since 15.04.2022
+ * @since 15.04.2023
  */
 @MappedSuperclass
 public abstract class AbstractEntity {
@@ -60,4 +60,5 @@ public abstract class AbstractEntity {
         }
         return super.equals(other);
     }
+
 }

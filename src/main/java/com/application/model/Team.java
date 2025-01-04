@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Contains main info about team.
  *
  * @author Ilya Ryabukhin
- * @since 15.04.2022
+ * @since 15.04.2023
  */
 @Entity
 public class Team extends AbstractEntity {

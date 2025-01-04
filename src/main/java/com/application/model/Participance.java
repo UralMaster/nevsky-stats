@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
  * Contains main info about particular player's participance in particular game.
  *
  * @author Ilya Ryabukhin
- * @since 15.04.2022
+ * @since 15.04.2023
  */
 @Entity
 public class Participance extends AbstractEntity {
@@ -162,4 +162,3 @@ public class Participance extends AbstractEntity {
     }
 
 }
-

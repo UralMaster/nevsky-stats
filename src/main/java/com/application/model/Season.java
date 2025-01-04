@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * Contains main info about {@link Tournament}'s season.
  *
  * @author Ilya Ryabukhin
- * @since 15.04.2022
+ * @since 15.04.2023
  */
 @Entity
 public class Season extends AbstractEntity {
@@ -202,4 +202,3 @@ public class Season extends AbstractEntity {
     }
 
 }
-
