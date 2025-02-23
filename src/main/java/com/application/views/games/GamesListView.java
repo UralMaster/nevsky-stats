@@ -2,7 +2,12 @@ package com.application.views.games;
 
 import com.application.model.Game;
 import com.application.model.Principal;
-import com.application.service.*;
+import com.application.service.GameService;
+import com.application.service.ParticipanceService;
+import com.application.service.PlayerService;
+import com.application.service.SeasonService;
+import com.application.service.TeamService;
+import com.application.service.TournamentService;
 import com.application.views.MainLayout;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.button.Button;
@@ -17,6 +22,12 @@ import com.vaadin.flow.router.Route;
 
 import java.util.List;
 
+/**
+ * Table for tab with {@link Game}s
+ *
+ * @author Ilya Ryabukhin
+ * @since 18.03.2023
+ */
 @Route(value = "games", layout = MainLayout.class)
 @PageTitle("Игры | Н26/54 статистика")
 public class GamesListView extends VerticalLayout {
@@ -102,7 +113,13 @@ public class GamesListView extends VerticalLayout {
             }
         }).setHeader("Редактор")
                 .setKey("editor");
+        grid.addColumn(game -> "").setKey("rowIndex");
+        grid.addAttachListener(event -> grid.getColumnByKey("rowIndex").getElement().executeJs(
+                "this.renderer = function(root, column, rowData) {root.textContent = rowData.index + 1}"
+        ));
+
         grid.setColumnOrder(
+                grid.getColumnByKey("rowIndex"),
                 grid.getColumnByKey("gamedate"),
                 grid.getColumnByKey("nevskyTeam"),
                 grid.getColumnByKey("nevskyGoals"),
@@ -118,6 +135,7 @@ public class GamesListView extends VerticalLayout {
         );
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        grid.getColumnByKey("rowIndex").setAutoWidth(false).setWidth("4em");
 
         grid.sort(List.of(new GridSortOrder<>(grid.getColumnByKey("gamedate"), SortDirection.DESCENDING)));
 
