@@ -20,6 +20,12 @@ import com.vaadin.flow.router.Route;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Table for tab with {@link Player}s
+ *
+ * @author Ilya Ryabukhin
+ * @since 18.03.2023
+ */
 @Route(value = "players", layout = MainLayout.class)
 @PageTitle("Игроки | Н26/54 статистика")
 public class PlayersListView extends VerticalLayout {
@@ -132,7 +138,13 @@ public class PlayersListView extends VerticalLayout {
             }
         }).setHeader("Редактор")
                 .setKey("editor");
+        grid.addColumn(game -> "").setKey("rowIndex");
+        grid.addAttachListener(event -> grid.getColumnByKey("rowIndex").getElement().executeJs(
+                "this.renderer = function(root, column, rowData) {root.textContent = rowData.index + 1}"
+        ));
+
         grid.setColumnOrder(
+                grid.getColumnByKey("rowIndex"),
                 grid.getColumnByKey("name"),
                 grid.getColumnByKey("birthday"),
                 grid.getColumnByKey("games26"),
@@ -161,6 +173,7 @@ public class PlayersListView extends VerticalLayout {
         );
 
         grid.getColumns().forEach(col -> col.setAutoWidth(true));
+        grid.getColumnByKey("rowIndex").setAutoWidth(false).setWidth("4em");
 
         grid.sort(List.of(new GridSortOrder<>(grid.getColumnByKey("games"), SortDirection.DESCENDING)));
 
